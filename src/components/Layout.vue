@@ -9,5 +9,14 @@ import Header from "./Header/Header.vue";
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+.container {
+  @media (min-width: 600px) {
+    max-width: 600px;
+  }
+
+  @media (min-width: 1600px) {
+    max-width: 768px;
+  }
+}
 </style>
