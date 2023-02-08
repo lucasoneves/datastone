@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --main-transition: all 0.20s ease-in;
+    --base-blue-light: rgb(160, 203, 255);
+    --base-blue: rgb(22, 67, 146);
+    --base-gray: rgb(227, 227, 227);
+    --base-gray-darken: rgb(163, 163, 163);
+}
+
+.bg-base-blue {
+    background: var(--base-blue);
+}

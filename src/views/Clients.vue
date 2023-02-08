@@ -8,7 +8,7 @@ const clients = ref([]);
 
 <template>
   <Layout>
-    <h2 class="text-3xl font-bold">Clients</h2>
+    <h2 class="text-3xl font-bold">Adicionar Cliente</h2>
     <ul>
       <li v-for="client in clients" :key="client.id">
         {{ client.name }}
