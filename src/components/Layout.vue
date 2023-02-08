@@ -1,15 +1,13 @@
-<script setup></script>
+<script setup>
+import Header from "./Header/Header.vue";
+</script>
 
 <template>
-  <div class="wrapper">
+  <Header></Header>
+  <div class="container mx-auto px-4">
     <slot></slot>
   </div>
 </template>
 
 <style scoped>
-.wrapper {
-  max-width: 1024px;
-  margin: auto;
-  padding: 15px;
-}
 </style>
