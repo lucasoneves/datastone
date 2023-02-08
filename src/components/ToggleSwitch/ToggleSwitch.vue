@@ -2,9 +2,11 @@
 import { ref } from "vue";
 
 const isActive = ref(false);
+const emit = defineEmits(["checked-event"]);
 
 function handleToggleSwitch() {
   isActive.value = !isActive.value;
+  emit("checked-event", isActive);
 }
 </script>
 
@@ -32,6 +34,7 @@ function handleToggleSwitch() {
   transition: var(--main-transition);
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   &.active {
     background: var(--base-blue-light);
