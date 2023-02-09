@@ -27,7 +27,7 @@ function handleCheckedEvent(event) {
 function saveClient(e) {
   e.preventDefault();
   store.commit("addClient", client.value);
-  router.push("/clients/list");
+  router.push("/clients");
 }
 
 watch(client.value, async () => {

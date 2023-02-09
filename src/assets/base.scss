@@ -12,8 +12,18 @@
     --base-blue: rgb(22, 67, 146);
     --base-gray: rgb(227, 227, 227);
     --base-gray-darken: rgb(163, 163, 163);
+
+    --md-viewport: 640px;
 }
 
 .bg-base-blue {
     background: var(--base-blue);
+}
+
+.link {
+    background: var(--base-blue);
+
+    @media (min-width: var(--md-viewport)) {
+        width: 150px;
+    }
 }

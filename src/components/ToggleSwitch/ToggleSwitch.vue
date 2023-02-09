@@ -36,7 +36,7 @@ const getStatusClient = computed(() => {
 <style lang="scss" scoped>
 .switch-wrapper {
   width: 50px;
-  height: 25px;
+  height: 24px;
   border-radius: 50px;
   background: var(--base-gray);
   padding: 2px;

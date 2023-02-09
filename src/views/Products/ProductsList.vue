@@ -8,18 +8,18 @@ import ToggleSwitch from "../../components/ToggleSwitch/ToggleSwitch.vue";
 import ButtonAdd from "../../components/ButtonAdd/index.vue";
 const store = useStore();
 
-const clientsList = computed(() => {
-  return store.state.clients;
+const productsList = computed(() => {
+  return store.state.products;
 });
 
-const fields = ref(["Nome", "Documento", "Telefone", "E-mail", "Status"]);
+const fields = ref(["Nome", "Status"]);
 </script>
 
 <template>
   <Layout>
-    <h2 class="text-3xl font-bold mb-10">Clientes Cadastrados</h2>
-    <ButtonAdd path-link="/clients/add" text-cta="Adicionar cliente" />
-    <table v-if="clientsList.length > 0" class="table-auto w-full text-sm">
+    <h2 class="text-3xl font-bold mb-10">Produtos Cadastrados</h2>
+    <ButtonAdd path-link="/products/add" text-cta="Adicionar produto" />
+    <table v-if="productsList.length > 0" class="table-auto w-full">
       <thead>
         <th v-for="field in fields" class="p-4 text-left" :key="field">
           {{ field }}
@@ -28,12 +28,9 @@ const fields = ref(["Nome", "Documento", "Telefone", "E-mail", "Status"]);
         <th class="p-4 text-left"></th>
       </thead>
       <tbody>
-        <tr v-for="client in clientsList" :key="client.id">
-          <td class="p-4">{{ client.name }}</td>
-          <td class="p-4">{{ client.clientDocument }}</td>
-          <td class="p-4">{{ client.phone }}</td>
-          <td class="p-4">{{ client.email }}</td>
-          <td class="p-4">{{ client.active }}</td>
+        <tr v-for="product in productsList" :key="product.id">
+          <td class="p-4">{{ product.name }}</td>
+          <td class="p-4">{{ product.active ? "Ativo" : "Inativo" }}</td>
           <td class="p-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -50,11 +47,13 @@ const fields = ref(["Nome", "Documento", "Telefone", "E-mail", "Status"]);
               />
             </svg>
           </td>
-          <td class="p-4"><ToggleSwitch :statusActive="client.active" /></td>
+          <td class="p-4">
+            <ToggleSwitch :statusActive="product.active" />
+          </td>
         </tr>
       </tbody>
     </table>
-    <h3 v-else>Não existem clientes cadastrados</h3>
+    <h3 v-else>Não existem produtos cadastrados</h3>
   </Layout>
 </template>
 
