@@ -2,9 +2,11 @@
   components: { Layout },ble vue/multi-word-component-names -->
 <script setup>
 import { ref, watch } from "vue";
+import { useStore } from "vuex";
 import Layout from "../components/Layout.vue";
 import ToggleSwitch from "../components/ToggleSwitch/ToggleSwitch.vue";
 import MainButton from "../components/MainButton/MainButton.vue";
+const store = useStore();
 const product = ref({ name: "", isActive: false });
 const enableForm = ref(false);
 function handleCheckedEvent(event) {
@@ -12,6 +14,7 @@ function handleCheckedEvent(event) {
 }
 function saveProduct(e) {
   e.preventDefault();
+  store.commit("addProduct", product.value);
 }
 
 watch(product.value, async (newProduct) => {
