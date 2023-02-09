@@ -1,21 +1,31 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 const isActive = ref(false);
+const props = defineProps({
+  withText: Boolean,
+  statusActive: Boolean,
+});
 const emit = defineEmits(["checked-event"]);
 
 function handleToggleSwitch() {
   isActive.value = !isActive.value;
   emit("checked-event", isActive);
 }
+
+const getStatusClient = computed(() => {
+  return isActive.value || props.statusActive ? "active" : "";
+});
 </script>
 
 <template>
   <div class="flex items-start flex-col gap-2">
-    <span class="block">Status: {{ isActive ? "Ativo" : "Inativo" }}</span>
+    <span class="block" v-if="withText"
+      >Status: {{ isActive ? "Ativo" : "Inativo" }}</span
+    >
     <div
       class="switch-wrapper"
-      :class="isActive ? 'active' : ''"
+      :class="getStatusClient"
       @click="handleToggleSwitch"
     >
       <div class="switch-button"></div>

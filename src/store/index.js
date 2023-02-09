@@ -16,6 +16,9 @@ const store = createStore({
     addProduct(state, payload) {
       state.products.push(payload);
     },
+    addClient(state, payload) {
+      state.clients.push(payload);
+    },
   },
   actions: {
     increment({ commit }) {
@@ -23,6 +26,9 @@ const store = createStore({
     },
     addProduct({ commit }) {
       commit("addProduct");
+    },
+    addClient({ commit }) {
+      commit("addClient");
     },
   },
 });

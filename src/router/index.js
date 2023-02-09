@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
-import Clients from "../views/Clients.vue";
+import Clients from "../views/Clients/Clients.vue";
+import ClientsList from "../views/Clients/ClientsLists.vue";
 import Products from "../views/Products.vue";
 
 const router = createRouter({
@@ -15,6 +16,11 @@ const router = createRouter({
       path: "/clients",
       name: "clients",
       component: Clients,
+    },
+    {
+      path: "/clients/list",
+      name: "clients-list",
+      component: ClientsList,
     },
     {
       path: "/products",

@@ -2,25 +2,32 @@
   components: { Layout },ble vue/multi-word-component-names -->
 <script setup>
 import { ref, watch } from "vue";
-import Layout from "../components/Layout.vue";
-import ToggleSwitch from "../components/ToggleSwitch/ToggleSwitch.vue";
-import MainButton from "../components/MainButton/MainButton.vue";
+import { useStore } from "vuex";
+import router from "../../router";
+import Layout from "../../components/Layout.vue";
+import ToggleSwitch from "../../components/ToggleSwitch/ToggleSwitch.vue";
+import MainButton from "../../components/MainButton/MainButton.vue";
+const store = useStore();
 const client = ref({
   name: "",
   clientDocument: "",
   phone: "",
   email: "",
-  isActive: false,
+  active: false,
+  products: [],
+  id: Math.random(),
 });
 const enableForm = ref(false);
 const emailRegex = ref(
   new RegExp(/^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/, "gm")
 );
 function handleCheckedEvent(event) {
-  client.value.isActive = event.value;
+  client.value.active = event.value;
 }
 function saveClient(e) {
   e.preventDefault();
+  store.commit("addClient", client.value);
+  router.push("/clients/list");
 }
 
 watch(client.value, async () => {
@@ -30,9 +37,10 @@ watch(client.value, async () => {
       emailRegex.value.test(client.value.email)
     ) {
       enableForm.value = true;
-    } else {
-      enableForm.value = false;
+      return;
     }
+
+    enableForm.value = false;
   }
 });
 </script>
