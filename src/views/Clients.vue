@@ -13,6 +13,9 @@ const client = ref({
   isActive: false,
 });
 const enableForm = ref(false);
+const emailRegex = ref(
+  new RegExp(/^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/, "gm")
+);
 function handleCheckedEvent(event) {
   client.value.isActive = event.value;
 }
@@ -20,14 +23,17 @@ function saveClient(e) {
   e.preventDefault();
 }
 
-watch(client.value, async (newProduct) => {
-  if (newProduct.name.length > 0) {
-    enableForm.value = true;
-    return;
+watch(client.value, async () => {
+  for (const key in client.value) {
+    if (
+      (!client.value[key].length >= 0) &
+      emailRegex.value.test(client.value.email)
+    ) {
+      enableForm.value = true;
+    } else {
+      enableForm.value = false;
+    }
   }
-  enableForm.value = false;
-  //   console.log(newProduct);
-  //   console.log(oldProduct);
 });
 </script>
 
@@ -62,18 +68,9 @@ watch(client.value, async (newProduct) => {
         placeholder="E-mail"
         class="border px-4 py-2 rounded-xl mb-10 block"
         v-model="client.email"
+        required
       />
       <ToggleSwitch :withText="true" @checked-event="handleCheckedEvent" />
-      <!-- <button
-        :disabled="!enableForm"
-        @click="saveClient"
-        class=":md-w-full px-10 py-2 rounded-xl text-white mt-10 block col-span-2"
-        :class="
-          !enableForm ? 'cursor-not-allowed bg-slate-300' : 'bg-base-blue'
-        "
-      >
-        Salvar
-      </button> -->
       <MainButton
         :enable-form="enableForm"
         :handleClick="saveClient"

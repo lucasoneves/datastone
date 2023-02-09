@@ -45,6 +45,7 @@ watch(product.value, async (newProduct) => {
         :enable-form="enableForm"
         :handleClick="saveProduct"
         title="Salvar"
+        class="col-span-4"
       />
     </form>
   </Layout>
