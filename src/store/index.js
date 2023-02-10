@@ -16,6 +16,12 @@ const store = createStore({
     addProduct(state, payload) {
       state.products.push(payload);
     },
+    updateProduct(state, payload) {
+      const productToUpdate = state.products.findIndex(
+        (product) => product.id === payload.id
+      );
+      state.products[productToUpdate] = payload;
+    },
     addClient(state, payload) {
       state.clients.push(payload);
     },
@@ -26,6 +32,9 @@ const store = createStore({
     },
     addProduct({ commit }) {
       commit("addProduct");
+    },
+    updateProduct({ commit }) {
+      commit("updateProduct");
     },
     addClient({ commit }) {
       commit("addClient");

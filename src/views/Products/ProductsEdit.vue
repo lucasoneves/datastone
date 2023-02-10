@@ -42,7 +42,7 @@ async function updateProduct(e) {
     messageFormError.value = "Preencha todos os campos obrigatórios";
     return false;
   }
-  store.commit("addClient", productData.value);
+  store.commit("updateProduct", productData.value);
   //   router.push("/clients");
 }
 
