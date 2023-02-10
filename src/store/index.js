@@ -16,6 +16,12 @@ const store = createStore({
     addProduct(state, payload) {
       state.products.push(payload);
     },
+    updateClient(state, payload) {
+      const clientToUpdate = state.clients.findIndex(
+        (client) => client.id === payload.id
+      );
+      state.clients[clientToUpdate] = payload;
+    },
     updateProduct(state, payload) {
       const productToUpdate = state.products.findIndex(
         (product) => product.id === payload.id

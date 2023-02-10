@@ -21,7 +21,7 @@ import ToggleSwitch from "../../components/ToggleSwitch/ToggleSwitch.vue";
 import MainButton from "../../components/MainButton/MainButton.vue";
 const store = useStore();
 const route = useRoute();
-const validationForm = ref([]);
+const validationForm = ref({ message: "" });
 
 const clientData = ref({});
 
@@ -33,22 +33,26 @@ function handleCheckedEvent(event) {
   clientData.value.active = event.value;
 }
 
-const isValidInvalid = computed(() => {
+const isFormValid = computed(() => {
   return (
-    editClientData.value.name === "" ||
-    editClientData.value.clientDocument ||
-    editClientData.value.phone ||
-    editClientData.value.email === ""
+    (clientData.value.name !== "") &
+    (clientData.value.clientDocument !== "") &
+    (clientData.value.phone !== "") &
+    (clientData.value.email !== "")
   );
 });
+function handleValidate(e) {
+  e.preventDefault();
+  if (isFormValid.value) {
+    upDateClient(e);
+    return false;
+  } else {
+    validationForm.value.message = "Preencha todos os campos";
+  }
+}
 async function upDateClient(e) {
   e.preventDefault();
-  if (isValidInvalid.value) {
-    alert("erro");
-  } else {
-    alert("success");
-  }
-  //   store.commit("addClient", clientData.value);
+  store.commit("updateClient", clientData.value);
   //   router.push("/clients");
 }
 
@@ -58,6 +62,12 @@ const editClientData = computed(() => {
   );
   return clientSelected;
 });
+
+function clearMessage() {
+  if (isFormValid.value) {
+    validationForm.value.message = "";
+  }
+}
 
 onMounted(() => {
   clientData.value = { ...editClientData.value };
@@ -74,6 +84,8 @@ onMounted(() => {
         name="clientName"
         placeholder="Nome"
         class="border px-4 py-2 rounded-xl mb-10 block"
+        :class="clientData.name === '' ? 'invalid:border-red-500' : ''"
+        @blur="clearMessage"
         v-model="clientData.name"
         required
       />
@@ -83,6 +95,8 @@ onMounted(() => {
         name="clientDocument"
         placeholder="Documento"
         class="border px-4 py-2 rounded-xl mb-10 block"
+        :class="clientData.clientDocument === '' ? 'invalid:border-red-500' : ''"
+        @blur="clearMessage"
         v-model="clientData.clientDocument"
         required
       />
@@ -92,6 +106,8 @@ onMounted(() => {
         name="clientPhone"
         placeholder="Telefone"
         class="border px-4 py-2 rounded-xl mb-10 block"
+        :class="clientData.phone === '' ? 'invalid:border-red-500' : ''"
+        @blur="clearMessage"
         v-model="clientData.phone"
         required
       />
@@ -101,6 +117,8 @@ onMounted(() => {
         name="clientEmail"
         placeholder="E-mail"
         class="border px-4 py-2 rounded-xl mb-10 block"
+        :class="clientData.email === '' ? 'invalid:border-red-500' : ''"
+        @blur="clearMessage"
         v-model="clientData.email"
         required
       />
@@ -110,9 +128,15 @@ onMounted(() => {
         @checked-event="handleCheckedEvent"
         :status-active="clientData.active"
       />
+      <p
+        class="flex items-center justify-center col-span-2 w-52 bg-rose-200 p-2 rounded-xl"
+        v-if="validationForm.message.length"
+      >
+        {{ validationForm.message }}
+      </p>
       <MainButton
         :enable-form="true"
-        :handleClick="upDateClient"
+        :handleClick="handleValidate"
         title="Salvar"
         class="col-span-2"
       />

@@ -9,10 +9,10 @@ import ToggleSwitch from "../../components/ToggleSwitch/ToggleSwitch.vue";
 import MainButton from "../../components/MainButton/MainButton.vue";
 const store = useStore();
 const client = ref({
-  name: "",
-  clientDocument: "",
-  phone: "",
-  email: "",
+  name: "lucas",
+  clientDocument: "11111111",
+  phone: "11111111",
+  email: "casluhc@gmail.com",
   active: false,
   products: [],
   id: "",
