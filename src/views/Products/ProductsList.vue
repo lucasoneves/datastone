@@ -3,16 +3,20 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
+import router from "../../router";
 import Layout from "../../components/Layout.vue";
-import ToggleSwitch from "../../components/ToggleSwitch/ToggleSwitch.vue";
 import ButtonAdd from "../../components/ButtonAdd/index.vue";
 import IconEdit from "../../components/Icon/IconEdit.vue";
-import NoData from '../../components/NoData/index.vue';
+import NoData from "../../components/NoData/index.vue";
 const store = useStore();
 
 const productsList = computed(() => {
   return store.state.products;
 });
+
+function handleEdit(product) {
+  router.push("products/" + product.id);
+}
 
 const fields = ref(["Nome", "Status"]);
 </script>
@@ -33,7 +37,7 @@ const fields = ref(["Nome", "Status"]);
           <td class="p-4">{{ product.name }}</td>
           <td class="p-4">{{ product.active ? "Ativo" : "Inativo" }}</td>
           <td class="p-4 flex items-center justify-end gap-10">
-            <IconEdit /><ToggleSwitch :statusActive="product.active" />
+            <IconEdit @click-event="handleEdit(product)" />
           </td>
         </tr>
       </tbody>
@@ -54,3 +58,5 @@ const fields = ref(["Nome", "Status"]);
   }
 }
 </style>
+<!-- eslint-disa
+  components: { Layout },ble vue/multi-word-component-names -->

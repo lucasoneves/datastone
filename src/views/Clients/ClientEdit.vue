@@ -27,10 +27,10 @@ const clientData = ref({});
 
 function handleCheckedEvent(event) {
   if (clientData.value.active === event.value) {
-    clientData.value.active = !event.value
+    clientData.value.active = !event.value;
     return;
   }
-  clientData.value.active = event.value
+  clientData.value.active = event.value;
 }
 
 const isValidInvalid = computed(() => {
@@ -60,7 +60,7 @@ const editClientData = computed(() => {
 });
 
 onMounted(() => {
-  clientData.value = editClientData.value;
+  clientData.value = { ...editClientData.value };
 });
 </script>
 

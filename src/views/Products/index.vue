@@ -1,14 +1,15 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <!-- eslint-disa
   components: { Layout },ble vue/multi-word-component-names -->
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { useStore } from "vuex";
 import router from "../../router";
 import Layout from "../../components/Layout.vue";
 import ToggleSwitch from "../../components/ToggleSwitch/ToggleSwitch.vue";
 import MainButton from "../../components/MainButton/MainButton.vue";
 const store = useStore();
-const product = ref({ name: "", active: false, id: Math.random() });
+const product = ref({ name: "", active: false, id: "" });
 const enableForm = ref(false);
 function handleCheckedEvent(event) {
   product.value.active = event.value;
@@ -28,6 +29,10 @@ watch(product.value, async (newProduct) => {
   //   console.log(newProduct);
   //   console.log(oldProduct);
 });
+
+onMounted(() => {
+  product.value.id = Math.floor(Math.random() * 1000000);
+});
 </script>
 
 <template>
@@ -44,7 +49,7 @@ watch(product.value, async (newProduct) => {
       <ToggleSwitch
         :withText="true"
         @checked-event="handleCheckedEvent"
-        class="col-span-4"
+        :statusActive="product.active"
       />
       <MainButton
         :enable-form="enableForm"
