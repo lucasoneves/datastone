@@ -12,20 +12,16 @@ function handleToggleSwitch() {
   isActive.value = !isActive.value;
   emit("checked-event", isActive);
 }
-
-const getStatusClient = computed(() => {
-  return isActive.value || props.statusActive ? "active" : "";
-});
 </script>
 
 <template>
-  <div class="flex items-start flex-col gap-2">
+  <div class="flex flex-col gap-2">
     <span class="block" v-if="withText"
-      >Status: {{ isActive ? "Ativo" : "Inativo" }}</span
+      >Status: {{ statusActive === true ? "Ativo" : "Inativo" }}</span
     >
     <div
       class="switch-wrapper"
-      :class="getStatusClient"
+      :class="statusActive === true ? 'active' : ''"
       @click="handleToggleSwitch"
     >
       <div class="switch-button"></div>

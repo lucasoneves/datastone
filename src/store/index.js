@@ -31,6 +31,12 @@ const store = createStore({
       commit("addClient");
     },
   },
+  getters: {
+    // ...
+    getClientsData: (state) => (id) => {
+      return state.clients.find((client) => client.id === id);
+    },
+  },
 });
 
 export default store;

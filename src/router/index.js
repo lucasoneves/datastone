@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Clients from "../views/Clients/index.vue";
 import ClientsList from "../views/Clients/ClientsLists.vue";
+import ClientsEdit from "../views/Clients/ClientEdit.vue";
 import Products from "../views/Products/index.vue";
 import ProductsList from "../views/Products/ProductsList.vue";
 
@@ -22,6 +23,11 @@ const router = createRouter({
       path: "/clients",
       name: "clientsList",
       component: ClientsList,
+    },
+    {
+      path: "/clients/:id",
+      name: "clientsListId",
+      component: ClientsEdit,
     },
     {
       path: "/products/add",

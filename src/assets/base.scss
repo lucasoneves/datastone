@@ -6,6 +6,10 @@
     box-sizing: border-box;
 }
 
+body {
+    font-size: 14px;
+}
+
 :root {
     --main-transition: all 0.20s ease-in;
     --base-blue-light: rgb(160, 203, 255);

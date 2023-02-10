@@ -1,7 +1,7 @@
 <!-- eslint-disa
   components: { Layout },ble vue/multi-word-component-names -->
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { useStore } from "vuex";
 import router from "../../router";
 import Layout from "../../components/Layout.vue";
@@ -15,7 +15,7 @@ const client = ref({
   email: "",
   active: false,
   products: [],
-  id: Math.random(),
+  id: "",
 });
 const enableForm = ref(false);
 const emailRegex = ref(
@@ -30,10 +30,14 @@ function saveClient(e) {
   router.push("/clients");
 }
 
+onMounted(() => {
+  client.value.id = Math.floor(Math.random() * 1000000);
+});
+
 watch(client.value, async () => {
   for (const key in client.value) {
     if (
-      (!client.value[key].length >= 0) &
+      (client.value[key].length >= 0) &
       emailRegex.value.test(client.value.email)
     ) {
       enableForm.value = true;
@@ -78,7 +82,11 @@ watch(client.value, async () => {
         v-model="client.email"
         required
       />
-      <ToggleSwitch :withText="true" @checked-event="handleCheckedEvent" />
+      <ToggleSwitch
+        :withText="true"
+        @checked-event="handleCheckedEvent"
+        :statusActive="client.active"
+      />
       <MainButton
         :enable-form="enableForm"
         :handleClick="saveClient"
