@@ -1,18 +1,19 @@
 <!-- eslint-disa
   components: { Layout },ble vue/multi-word-component-names -->
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, computed, toRaw } from "vue";
 import { useStore } from "vuex";
 import router from "../../router";
 import Layout from "../../components/Layout.vue";
 import ToggleSwitch from "../../components/ToggleSwitch/ToggleSwitch.vue";
 import MainButton from "../../components/MainButton/MainButton.vue";
+import MultiSelect from "../../components/MultiSelect/index.vue";
 const store = useStore();
 const client = ref({
-  name: "lucas",
-  clientDocument: "11111111",
-  phone: "11111111",
-  email: "casluhc@gmail.com",
+  name: "",
+  clientDocument: "",
+  phone: "",
+  email: "",
   active: false,
   products: [],
   id: "",
@@ -28,6 +29,16 @@ function saveClient(e) {
   e.preventDefault();
   store.commit("addClient", client.value);
   router.push("/clients");
+}
+const messageNoProductsRecorded = computed(() => {
+  return !store.state.products.length;
+});
+
+const productsInactived = computed(() => {
+  return !store.state.products.find((product) => product.active);
+});
+function handleSelectedProducts(product) {
+  client.value.products = product;
 }
 
 onMounted(() => {
@@ -82,6 +93,17 @@ watch(client.value, async () => {
         v-model="client.email"
         required
       />
+      <div>
+        <h3 class="font-bold">Produtos vinculados</h3>
+        <MultiSelect
+          @select-option="handleSelectedProducts"
+          :options="store.state.products.filter((option) => option.active)"
+          :text-fallback="
+            (messageNoProductsRecorded || productsInactived) &&
+            'Sem produtos cadastrados ou ativados no sistema'
+          "
+        />
+      </div>
       <ToggleSwitch
         :withText="true"
         @checked-event="handleCheckedEvent"

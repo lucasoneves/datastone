@@ -4,15 +4,14 @@ import { createStore } from "vuex";
 const store = createStore({
   state() {
     return {
-      count: 0,
-      products: [],
+      products: [
+        { name: "Email", active: true, id: 1, selected: false },
+        { name: "Sites", active: true, id: 2, selected: false },
+      ],
       clients: [],
     };
   },
   mutations: {
-    increment(state) {
-      state.count++;
-    },
     addProduct(state, payload) {
       state.products.push(payload);
     },

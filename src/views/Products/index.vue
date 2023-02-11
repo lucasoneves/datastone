@@ -9,7 +9,7 @@ import Layout from "../../components/Layout.vue";
 import ToggleSwitch from "../../components/ToggleSwitch/ToggleSwitch.vue";
 import MainButton from "../../components/MainButton/MainButton.vue";
 const store = useStore();
-const product = ref({ name: "", active: false, id: "" });
+const product = ref({ name: "", active: false, id: "", selected: "" });
 const enableForm = ref(false);
 function handleCheckedEvent(event) {
   product.value.active = event.value;

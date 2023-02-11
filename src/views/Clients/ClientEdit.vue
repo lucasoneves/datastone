@@ -19,6 +19,7 @@ import router from "../../router";
 import Layout from "../../components/Layout.vue";
 import ToggleSwitch from "../../components/ToggleSwitch/ToggleSwitch.vue";
 import MainButton from "../../components/MainButton/MainButton.vue";
+import MultiSelect from "../../components/MultiSelect/index.vue";
 const store = useStore();
 const route = useRoute();
 const validationForm = ref({ message: "" });
@@ -53,7 +54,7 @@ function handleValidate(e) {
 async function upDateClient(e) {
   e.preventDefault();
   store.commit("updateClient", clientData.value);
-  //   router.push("/clients");
+  router.push("/clients");
 }
 
 const editClientData = computed(() => {
@@ -63,14 +64,28 @@ const editClientData = computed(() => {
   return clientSelected;
 });
 
+const messageNoProductsRecorded = computed(() => {
+  return !store.state.products.length;
+});
+
+const productsInactived = computed(() => {
+  return !store.state.products.find((product) => product.active);
+});
+
 function clearMessage() {
   if (isFormValid.value) {
     validationForm.value.message = "";
   }
 }
 
+function handleSelectedProducts(product) {
+  clientData.value.products = product;
+}
+
 onMounted(() => {
   clientData.value = { ...editClientData.value };
+  console.log(toRaw(clientData.value.products));
+  console.log(editClientData.value);
 });
 </script>
 
@@ -95,7 +110,9 @@ onMounted(() => {
         name="clientDocument"
         placeholder="Documento"
         class="border px-4 py-2 rounded-xl mb-10 block"
-        :class="clientData.clientDocument === '' ? 'invalid:border-red-500' : ''"
+        :class="
+          clientData.clientDocument === '' ? 'invalid:border-red-500' : ''
+        "
         @blur="clearMessage"
         v-model="clientData.clientDocument"
         required
@@ -122,7 +139,17 @@ onMounted(() => {
         v-model="clientData.email"
         required
       />
-
+      <div>
+        <h3 class="font-bold">Produtos vinculados</h3>
+        <MultiSelect
+          @select-option="handleSelectedProducts"
+          :options="store.state.products.filter((product) => product.active)"
+          :text-fallback="
+            (messageNoProductsRecorded || productsInactived) &&
+            'Sem produtos cadastrados ou ativados no sistema'
+          "
+        />
+      </div>
       <ToggleSwitch
         :withText="true"
         @checked-event="handleCheckedEvent"

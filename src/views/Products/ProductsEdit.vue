@@ -43,7 +43,7 @@ async function updateProduct(e) {
     return false;
   }
   store.commit("updateProduct", productData.value);
-  //   router.push("/clients");
+  router.push("/products");
 }
 
 const editProductData = computed(() => {
